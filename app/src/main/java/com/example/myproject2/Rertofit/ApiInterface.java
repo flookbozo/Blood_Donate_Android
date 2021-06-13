@@ -20,11 +20,23 @@ public interface ApiInterface {
                               @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("registeruser.php")
+    @POST("auth/user/register")
     Call<UserModel> registerUser(@Field("username") String username,
                                  @Field("password") String password,
-                                 @Field("name") String name,
-                                 @Field("user_tel") String user_tel);
+                                 @Field("email") String email,
+                                 @Field("prefix") String prefix,
+                                 @Field("firstname") String name,
+                                 @Field("lastname") String lastname,
+                                 @Field("gender") String gender,
+                                 @Field("duringpregnancy") String hiddenAnswer1,
+                                 @Field("breastfeeding") String hiddenAnswer2,
+                                 @Field("givebirth_past_6") String hiddenAnswer3,
+                                 @Field("typeblood") String typeblood,
+                                 @Field("typerh") String typerh,
+                                 @Field("date") String birthday,
+                                 @Field("question") String question,
+                                 @Field("answer") String answer,
+                                 @Field("phonnumber") String user_tel);
 
     @FormUrlEncoded
     @POST("auth/user/location")

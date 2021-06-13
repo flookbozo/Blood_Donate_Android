@@ -42,44 +42,56 @@ public class UserModel {
     @SerializedName("email")
     private String email;
 
-    public String getEmail() {
-        return email;
-    }
+    @Expose
+    @SerializedName("prefix")
+    private String prefix;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Expose
+    @SerializedName("lastname")
+    private String lastname;
+
+    @Expose
+    @SerializedName("duringpregnancy")
+    private String duringpregnancy;
+
+    @Expose
+    @SerializedName("breastfeeding")
+    private String breastfeeding;
+
+    @Expose
+    @SerializedName("givebirth_past_6")
+    private String givebirth_past_6;
+
+    @Expose
+    @SerializedName("typerh")
+    private String typerh;
+
+    @Expose
+    @SerializedName("date")
+    private String date;
+
+    @Expose
+    @SerializedName("question")
+    private String question;
+
+    @Expose
+    @SerializedName("answer")
+    private String answer;
+
+    @Expose
+    @SerializedName("message")
+    private String message;
+
 
     public UserModel(){
 
     }
 
-
-    public void setUser_tel(String user_tel) {
-        this.user_tel = user_tel;
-    }
-
-    public String getUser_gender() {
-        return user_gender;
-    }
-
-    public void setUser_gender(String user_gender) {
-        this.user_gender = user_gender;
-    }
-
-    public String getUser_bloodtype() {
-        return user_bloodtype;
-    }
-
-    public void setUser_bloodtype(String user_bloodtype) {
-        this.user_bloodtype = user_bloodtype;
-    }
-
-    public int getUserId() {
+    public int getId() {
         return id;
     }
 
-    public void setUserId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -109,5 +121,113 @@ public class UserModel {
 
     public String getUser_tel() {
         return user_tel;
+    }
+
+    public void setUser_tel(String user_tel) {
+        this.user_tel = user_tel;
+    }
+
+    public String getUser_gender() {
+        return user_gender;
+    }
+
+    public void setUser_gender(String user_gender) {
+        this.user_gender = user_gender;
+    }
+
+    public String getUser_bloodtype() {
+        return user_bloodtype;
+    }
+
+    public void setUser_bloodtype(String user_bloodtype) {
+        this.user_bloodtype = user_bloodtype;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getDuringpregnancy() {
+        return duringpregnancy;
+    }
+
+    public void setDuringpregnancy(String duringpregnancy) {
+        this.duringpregnancy = duringpregnancy;
+    }
+
+    public String getBreastfeeding() {
+        return breastfeeding;
+    }
+
+    public void setBreastfeeding(String breastfeeding) {
+        this.breastfeeding = breastfeeding;
+    }
+
+    public String getGivebirth_past_6() {
+        return givebirth_past_6;
+    }
+
+    public void setGivebirth_past_6(String givebirth_past_6) {
+        this.givebirth_past_6 = givebirth_past_6;
+    }
+
+    public String getTyperh() {
+        return typerh;
+    }
+
+    public void setTyperh(String typerh) {
+        this.typerh = typerh;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
