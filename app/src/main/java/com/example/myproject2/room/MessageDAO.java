@@ -21,6 +21,9 @@ public interface MessageDAO {
     @Query("SELECT * FROM messageitem WHERE hosname LIKE :hosName")
     List<Message> findRequest(String hosName);
 
-    @Query("UPDATE messageitem SET idRequest = :idrequest WHERE hosname LIKE :hosName")
+    @Query("UPDATE messageitem SET idRequest = :idrequest, active = 1 WHERE hosname LIKE :hosName")
     void updateMessage(int idrequest, String hosName);
+
+    @Query("UPDATE messageitem SET active = 0 WHERE hosname LIKE :hosName")
+    void updateActive(String hosName);
 }

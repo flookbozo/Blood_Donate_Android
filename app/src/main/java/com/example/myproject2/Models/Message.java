@@ -32,6 +32,14 @@ public class Message {
     @SerializedName("answer")
     public int answer;
 
+    @Expose
+    @SerializedName("idUser")
+    private int idUser;
+
+    @Expose
+    @SerializedName("messages")
+    private String messages;
+
     public Message( String hosname, int idRequest) {
         this.hosname = hosname;
         this.idRequest = idRequest;
@@ -52,5 +60,29 @@ public class Message {
 
     public void setAnswer(int answer) {
         this.answer = answer;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public String getMessages() {
+        return messages;
+    }
+
+    public void setMessages(String messages) {
+        this.messages = messages;
     }
 }

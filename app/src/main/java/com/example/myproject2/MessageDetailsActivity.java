@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.myproject2.Models.Message;
 import com.example.myproject2.Rertofit.ApiClient;
 import com.example.myproject2.Rertofit.ApiInterface;
+import com.example.myproject2.room.MessageRepository;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,11 +22,16 @@ public class MessageDetailsActivity extends AppCompatActivity {
 
     Button okButtonView;
     Button cancelButtonView;
+    String hospitalname;
     int answer;
     int activestatus;
     int idRequest;
     Message mMessage;
     ApiInterface apiInterface;
+    TextView messagesTextView;
+
+    int userid;
+    SessionLoginManager sessionLoginManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,38 +39,61 @@ public class MessageDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message_details);
 
         Intent intent = getIntent();
-        String hospitalname = intent.getStringExtra("hosname");
+        hospitalname = intent.getStringExtra("hosname");
         activestatus = intent.getIntExtra("active", 0);
         idRequest = intent.getIntExtra("idRequest", 0);
+
+        sessionLoginManager = new SessionLoginManager(this);
+        userid = sessionLoginManager.getUserID();
 
         TextView hosname = findViewById(R.id.hospital_name_text_view);
         hosname.setText(hospitalname);
 
         okButtonView = findViewById(R.id.ok_button);
         cancelButtonView = findViewById(R.id.button_cancel);
+        messagesTextView = findViewById(R.id.messages_text_view);
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        okButtonView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                answer = 1;
-                userReply(idRequest, answer);
-            }
-        });
+        if (activestatus == 1) {
+            okButtonView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    answer = 1;
+                    userReply(idRequest, answer);
+                    updateActive(hospitalname);
+                }
+            });
+
+            cancelButtonView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    answer = 2;
+                    userReply(idRequest, answer);
+                    updateActive(hospitalname);
+                }
+            });
+        }else {
+            okButtonView.setVisibility(View.GONE);
+            cancelButtonView.setVisibility(View.GONE);
+        }
     }
 
     public void userReply(int idRequest, int answer) {
-        Call<Message> callmessage = apiInterface.userReply(idRequest,answer);
+        Call<Message> callmessage = apiInterface.userReply(idRequest, answer, userid);
         callmessage.enqueue(new Callback<Message>() {
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {
                 if(response.isSuccessful()) {
                     mMessage = response.body();
                     if(mMessage.isSuccess()) {
-                        Toast.makeText(MessageDetailsActivity.this,
+                        /*Toast.makeText(MessageDetailsActivity.this,
                                 "ขอบคุณสำหรับความร่วมมือ ทางโรงพยาบาลกำลังรอโลหิตของคุณอยู่",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_LONG).show();*/
+                        messagesTextView.setText(mMessage.getMessages());
+                    }
+                    else {
+                        messagesTextView.setText(mMessage.getMessages());
                     }
                 }
                 else {
@@ -79,6 +108,15 @@ public class MessageDetailsActivity extends AppCompatActivity {
                 Toast.makeText(MessageDetailsActivity.this,
                         t.toString(),
                         Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void updateActive(String hosName) {
+        MessageRepository repo = new MessageRepository(MessageDetailsActivity.this);
+        repo.updateActive(hosName, new MessageRepository.UpdateActiveCallback() {
+            @Override
+            public void onUpdateSuccess() {
             }
         });
     }

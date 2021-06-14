@@ -90,11 +90,6 @@ public class RegisterActivity extends AppCompatActivity {
     RadioButton radioButton2;
     RadioButton radioButton3;
 
-   /* @BindView(R.id.editTextUsername) EditText editTextUsername;
-    @BindView(R.id.editTextPassword) EditText editTextPassword;
-    @BindView(R.id.editTextFullname) EditText editTextFullname;
-    @BindView(R.id.editTextPhone) EditText editTextPhone;*/
-
     ApiInterface apiInterface;
 
     @Override
@@ -234,10 +229,6 @@ public class RegisterActivity extends AppCompatActivity {
         answer = editTextAnswer.getText().toString();
         phonenumber = editTextPhone.getText().toString();
 
-        /*Toast.makeText(RegisterActivity.this,
-                gender+", "+hiddenAnswer1+", "+hiddenAnswer2+", "+hiddenAnswer3,
-                Toast.LENGTH_LONG).show();*/
-
         if(username.isEmpty()) {
             error++;
         }
@@ -297,78 +288,52 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
         }
         else {
-            Call<UserModel> callRegister = apiInterface.registerUser(username,
-                    password,
-                    email,
-                    prefix,
-                    name,
-                    lastname,
-                    gender,
-                    hiddenAnswer1,
-                    hiddenAnswer2,
-                    hiddenAnswer3,
-                    typeblood,
-                    typerh,
-                    birthday,
-                    question,
-                    answer,
-                    phonenumber);
-            callRegister.enqueue(new Callback<UserModel>() {
-                @Override
-                public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                    if(response.isSuccessful() && response.body()!=null) {
-                        UserModel userModel = response.body();
-                        if (userModel!=null) {
-                            Toast.makeText(RegisterActivity.this,
-                                    userModel.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            startActivity(intent);
+            if(password.equals(passwordAgain)) {
+                Call<UserModel> callRegister = apiInterface.registerUser(username,
+                        password,
+                        email,
+                        prefix,
+                        name,
+                        lastname,
+                        gender,
+                        hiddenAnswer1,
+                        hiddenAnswer2,
+                        hiddenAnswer3,
+                        typeblood,
+                        typerh,
+                        birthday,
+                        question,
+                        answer,
+                        phonenumber);
+                callRegister.enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                        if(response.isSuccessful() && response.body()!=null) {
+                            UserModel userModel = response.body();
+                            if (userModel!=null) {
+                                Toast.makeText(RegisterActivity.this,
+                                        userModel.getMessage(),
+                                        Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<UserModel> call, Throwable t) {
-                    Toast.makeText(RegisterActivity.this,
-                            t.toString(),
-                            Toast.LENGTH_LONG).show();
-                }
-            });
-            Toast.makeText(RegisterActivity.this,
-                "Register Success.",
-                Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        Toast.makeText(RegisterActivity.this,
+                                t.toString(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            else {
+                Toast.makeText(RegisterActivity.this,
+                        "Password don't match",
+                        Toast.LENGTH_LONG).show();
+            }
         }
 
     }
-
-    /*public void registerUser(View v) {
-        Call<UserModel> callRegister = apiInterface.registerUser(editTextUsername.getText().toString(),
-                editTextPassword.getText().toString(),
-                editTextFullname.getText().toString(),
-                editTextPhone.getText().toString());
-
-        callRegister.enqueue(new Callback<UserModel>() {
-            @Override
-            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                if(response.isSuccessful() && response.body()!=null) {
-                    UserModel userModel = response.body();
-
-                    if(userModel!=null) {
-                        Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
-                    else {
-                        Toast.makeText(RegisterActivity.this, "User could'n be registered", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Error could'n connect."+t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }*/
 }

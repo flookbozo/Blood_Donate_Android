@@ -51,5 +51,6 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("userreply")
     Call<Message> userReply(@Field("idRequest") int idRequest,
-                            @Field("answer") int answer);
+                            @Field("answer") int answer,
+                            @Field("idUser") int idUser);
 }

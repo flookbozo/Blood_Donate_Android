@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
-                                    else {
+                                    else if (itemList.get(0).getActive() == 0) {
                                         repo.updateMessage(locationModel.getIdRequest(), locationModel.getHospitalname(), new MessageRepository.UpdateCallback() {
                                             @Override
                                             public void onUpdateSuccess() {

@@ -30,6 +30,11 @@ public class MessageRepository {
         updateTask.execute(idRq, hosName);
     }
 
+    public void updateActive(String hosName, UpdateActiveCallback callback) {
+        UpdateActiveTask updateActiveTask = new UpdateActiveTask(mContext, callback);
+        updateActiveTask.execute(hosName);
+    }
+
     private static class GetTask extends AsyncTask<Void, Void, List<Message>> {
         private Context mContext;
         private Callback mCallback;
@@ -140,4 +145,30 @@ public class MessageRepository {
         void onUpdateSuccess();
     }
 
+    public static class UpdateActiveTask extends AsyncTask<String, Void, Void> {
+        private Context mContext;
+        private UpdateActiveCallback mCallback;
+
+        public UpdateActiveTask(Context mContext, UpdateActiveCallback mCallback) {
+            this.mContext = mContext;
+            this.mCallback = mCallback;
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            AppDatabase db = AppDatabase.getInstance(mContext);
+            db.messageDAO().updateActive(strings[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mCallback.onUpdateSuccess();
+        }
+    }
+
+    public interface UpdateActiveCallback {
+        void onUpdateSuccess();
+    }
 }

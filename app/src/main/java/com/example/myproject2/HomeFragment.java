@@ -29,6 +29,7 @@ public class HomeFragment extends Fragment {
     String user_gender;
     String user_typeblood;
     String user_tel;
+    String lastname;
     UserModel user;
 
     TextView user_name_text;
@@ -65,19 +66,16 @@ public class HomeFragment extends Fragment {
                     UserModel userModel = response.body();
 
                     if(userModel!=null) {
-                        user.setName(userModel.getName());
-                        user.setUser_gender(userModel.getUser_gender());
-                        user.setUser_bloodtype(userModel.getUser_bloodtype());
-                        user.setUser_tel(userModel.getUser_tel());
                         user_name = userModel.getName();
+                        lastname = userModel.getLastname();
                         user_gender = userModel.getUser_gender();
                         user_typeblood = userModel.getUser_bloodtype();
                         user_tel = userModel.getUser_tel();
-                        user_name_text.setText(user_name);
+                        user_name_text.setText(user_name+" "+lastname);
                         user_gender_text.setText(user_gender);
                         user_typeblood_text.setText(user_typeblood);
                         user_tel_text.setText(user_tel);
-                        Toast.makeText(HomeFragment.this.requireActivity(),user.getName()+","+user.getUser_gender()+","+user.getUser_bloodtype()+","+user.getUser_tel(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeFragment.this.requireActivity(),user_name+","+lastname+","+user_gender+","+user_typeblood, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
