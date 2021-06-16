@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyProject2"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MessageDetailsActivity"></activity>
+        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".MessageDetailsActivity" />
 
         <receiver android:name=".MyLocationService" />
 

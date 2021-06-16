@@ -60,6 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, MessageDetailsActivity.class);
+                    intent.putExtra("idUser", message.idUser);
                     intent.putExtra("hosname", message.hosname);
                     intent.putExtra("active", message.active);
                     intent.putExtra("idRequest", message.idRequest);

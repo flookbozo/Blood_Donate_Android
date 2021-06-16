@@ -13,6 +13,11 @@ public class Message {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    @Expose
+    @SerializedName("idUser")
+    @ColumnInfo(name = "idUser")
+    public int idUser;
+
     @ColumnInfo(name = "hosname")
     public String hosname;
 
@@ -33,14 +38,11 @@ public class Message {
     public int answer;
 
     @Expose
-    @SerializedName("idUser")
-    private int idUser;
-
-    @Expose
     @SerializedName("messages")
     private String messages;
 
-    public Message( String hosname, int idRequest) {
+    public Message(int idUser, String hosname, int idRequest) {
+        this.idUser = idUser;
         this.hosname = hosname;
         this.idRequest = idRequest;
         this.active = 1;

@@ -20,11 +20,15 @@ import java.util.List;
 public class MessageFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    SessionLoginManager sessionLoginManager;
+    int userid;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_message, container,false);
+        sessionLoginManager = new SessionLoginManager(getContext());
+        userid = sessionLoginManager.getUserID();
         recyclerView = rootview.findViewById(R.id.recyclerview);
         return rootview;
     }
@@ -38,9 +42,9 @@ public class MessageFragment extends Fragment {
     private void reloadData() {
         MessageRepository repo = new MessageRepository(MessageFragment.this.getContext());
 
-        repo.getMessage(new MessageRepository.Callback() {
+        repo.getMessageId(userid, new MessageRepository.GetMessageIdCallback() {
             @Override
-            public void onGet(List<Message> itemList) {
+            public void onGetSuccess(List<Message> itemList) {
                 RecyclerViewAdapter adapter = new RecyclerViewAdapter(
                         MessageFragment.this.getContext(),
                         R.layout.item_message,

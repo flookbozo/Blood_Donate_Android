@@ -72,10 +72,10 @@ public class HomeFragment extends Fragment {
                         user_typeblood = userModel.getUser_bloodtype();
                         user_tel = userModel.getUser_tel();
                         user_name_text.setText(user_name+" "+lastname);
-                        user_gender_text.setText(user_gender);
+                        user_gender_text.setText(user_gender);;
                         user_typeblood_text.setText(user_typeblood);
                         user_tel_text.setText(user_tel);
-                        Toast.makeText(HomeFragment.this.requireActivity(),user_name+","+lastname+","+user_gender+","+user_typeblood, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeFragment.this.requireActivity(),user_name+","+lastname+","+user_gender+","+user_typeblood, Toast.LENGTH_SHORT).show();
                     }
                 }
             }

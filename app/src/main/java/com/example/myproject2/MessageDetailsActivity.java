@@ -23,6 +23,7 @@ public class MessageDetailsActivity extends AppCompatActivity {
     Button okButtonView;
     Button cancelButtonView;
     String hospitalname;
+    int id;
     int answer;
     int activestatus;
     int idRequest;
@@ -39,6 +40,7 @@ public class MessageDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message_details);
 
         Intent intent = getIntent();
+        id = intent.getIntExtra("idUser", 0);
         hospitalname = intent.getStringExtra("hosname");
         activestatus = intent.getIntExtra("active", 0);
         idRequest = intent.getIntExtra("idRequest", 0);
@@ -114,7 +116,7 @@ public class MessageDetailsActivity extends AppCompatActivity {
 
     public void updateActive(String hosName) {
         MessageRepository repo = new MessageRepository(MessageDetailsActivity.this);
-        repo.updateActive(hosName, new MessageRepository.UpdateActiveCallback() {
+        repo.updateActive(userid, hosName, new MessageRepository.UpdateActiveCallback() {
             @Override
             public void onUpdateSuccess() {
             }

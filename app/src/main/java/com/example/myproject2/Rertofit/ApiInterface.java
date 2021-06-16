@@ -49,6 +49,23 @@ public interface ApiInterface {
     Call<UserModel> getDataUser(@Path("id") int userid);
 
     @FormUrlEncoded
+    @POST("updateProfile")
+    Call<UserModel> updateDataUser(@Field("id") int userid,
+                                   @Field("username") String username,
+                                   @Field("email") String email,
+                                   @Field("prefix") String prefix,
+                                   @Field("firstname") String name,
+                                   @Field("lastname") String lastname,
+                                   @Field("gender") String gender,
+                                   @Field("duringpregnancy") String hiddenAnswer1,
+                                   @Field("breastfeeding") String hiddenAnswer2,
+                                   @Field("givebirth_past_6") String hiddenAnswer3,
+                                   @Field("typeblood") String typeblood,
+                                   @Field("typerh") String typerh,
+                                   @Field("date") String birthday,
+                                   @Field("phonnumber") String user_tel);
+
+    @FormUrlEncoded
     @POST("userreply")
     Call<Message> userReply(@Field("idRequest") int idRequest,
                             @Field("answer") int answer,

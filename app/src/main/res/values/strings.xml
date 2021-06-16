@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Blood Donate</string>
     <string name="logout">LOGOUT</string>
+    <string name="edit">EDIT</string>
     <string name="beforeDonateTitle">การเตรียมตัวก่อนบริจาคโลหิต</string>
     <string name="beforeDonateText">\t\t\t\tการเตรียมตัวก่อนบริจาคโลหิต เพื่อมิให้ผู้บริจาคโลหิตอ่อนเพลียมากหลังบริจาคโลหิต ผู้บริจาคโลหิตจึงควรเตรียมตัวดังนี้\n
         1. ก่อนบริจาคโลหิต 1-2 วัน ควรดื่มน้ำมากๆ เพื่อให้ร่างกายสดชื่น เลือดไหลเวียนได้ดี\n

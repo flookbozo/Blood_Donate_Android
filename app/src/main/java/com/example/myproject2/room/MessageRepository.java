@@ -20,19 +20,24 @@ public class MessageRepository {
         insertTask.execute(item);
     }
 
-    public void findRequest(String hosname, FindCallback callback) {
+    public void findRequest(int idUser, String hosname, FindCallback callback) {
         FindTask findTask = new FindTask(mContext, callback);
-        findTask.execute(hosname);
+        findTask.execute(idUser, hosname);
     }
 
-    public void updateMessage(int idRq, String hosName, UpdateCallback callback) {
+    public void updateMessage(int idRq, int idUser, String hosName, UpdateCallback callback) {
         UpdateTask updateTask = new UpdateTask(mContext, callback);
-        updateTask.execute(idRq, hosName);
+        updateTask.execute(idRq, idUser, hosName);
     }
 
-    public void updateActive(String hosName, UpdateActiveCallback callback) {
+    public void updateActive(int idUser, String hosName, UpdateActiveCallback callback) {
         UpdateActiveTask updateActiveTask = new UpdateActiveTask(mContext, callback);
-        updateActiveTask.execute(hosName);
+        updateActiveTask.execute(idUser, hosName);
+    }
+
+    public void getMessageId(int idUser, GetMessageIdCallback callback) {
+        GetMessageIdTask getMessageIdTask = new GetMessageIdTask(mContext, callback);
+        getMessageIdTask.execute(idUser);
     }
 
     private static class GetTask extends AsyncTask<Void, Void, List<Message>> {
@@ -89,7 +94,7 @@ public class MessageRepository {
         void onInsertSuccess();
     }
 
-    public static class FindTask extends AsyncTask<String, Void, List<Message>> {
+    public static class FindTask extends AsyncTask<Object, Void, List<Message>> {
         private Context mContext;
         private FindCallback mCallback;
 
@@ -99,9 +104,11 @@ public class MessageRepository {
         }
 
         @Override
-        protected List<Message> doInBackground(String... strings) {
+        protected List<Message> doInBackground(Object... objects) {
+            int iduser = (Integer) objects[0];
+            String hosname = (String) objects[1];
             AppDatabase db = AppDatabase.getInstance(mContext);
-            List<Message> itemList = db.messageDAO().findRequest(strings[0]);
+            List<Message> itemList = db.messageDAO().findRequest(iduser, hosname);
             return itemList;
         }
 
@@ -128,9 +135,10 @@ public class MessageRepository {
         @Override
         protected Void doInBackground(Object... objects) {
             int idRq = (Integer) objects[0];
-            String hosName = (String) objects[1];
+            int idU = (Integer) objects[1];
+            String hosName = (String) objects[2];
             AppDatabase db = AppDatabase.getInstance(mContext);
-            db.messageDAO().updateMessage(idRq, hosName);
+            db.messageDAO().updateMessage(idRq, idU, hosName);
             return null;
         }
 
@@ -145,7 +153,7 @@ public class MessageRepository {
         void onUpdateSuccess();
     }
 
-    public static class UpdateActiveTask extends AsyncTask<String, Void, Void> {
+    public static class UpdateActiveTask extends AsyncTask<Object, Void, Void> {
         private Context mContext;
         private UpdateActiveCallback mCallback;
 
@@ -155,9 +163,11 @@ public class MessageRepository {
         }
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected Void doInBackground(Object... objects) {
+            int idU = (Integer) objects[0];
+            String hosname = (String) objects[1];
             AppDatabase db = AppDatabase.getInstance(mContext);
-            db.messageDAO().updateActive(strings[0]);
+            db.messageDAO().updateActive(idU, hosname);
             return null;
         }
 
@@ -170,5 +180,32 @@ public class MessageRepository {
 
     public interface UpdateActiveCallback {
         void onUpdateSuccess();
+    }
+
+    public static class GetMessageIdTask extends AsyncTask<Integer, Void, List<Message>> {
+        private Context mContext;
+        private GetMessageIdCallback mCallback;
+
+        public GetMessageIdTask(Context mContext, GetMessageIdCallback mCallback) {
+            this.mContext = mContext;
+            this.mCallback = mCallback;
+        }
+
+        @Override
+        protected List<Message> doInBackground(Integer... integers) {
+            AppDatabase db = AppDatabase.getInstance(mContext);
+            List<Message> itemList = db.messageDAO().getMessageId(integers[0]);
+            return itemList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Message> messages) {
+            super.onPostExecute(messages);
+            mCallback.onGetSuccess(messages);
+        }
+    }
+
+    public interface GetMessageIdCallback {
+        void onGetSuccess(List<Message> itemList);
     }
 }

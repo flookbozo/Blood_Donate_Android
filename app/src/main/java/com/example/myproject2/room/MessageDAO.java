@@ -15,15 +15,18 @@ public interface MessageDAO {
     @Query("SELECT * FROM messageitem")
     List<Message> getAllMessage();
 
+    @Query("SELECT * FROM messageitem WHERE idUser = :idUser")
+    List<Message> getMessageId(int idUser);
+
     @Insert
     void insertMessage(Message message);
 
-    @Query("SELECT * FROM messageitem WHERE hosname LIKE :hosName")
-    List<Message> findRequest(String hosName);
+    @Query("SELECT * FROM messageitem WHERE idUser = :idUser AND hosname LIKE :hosName")
+    List<Message> findRequest(int idUser, String hosName);
 
-    @Query("UPDATE messageitem SET idRequest = :idrequest, active = 1 WHERE hosname LIKE :hosName")
-    void updateMessage(int idrequest, String hosName);
+    @Query("UPDATE messageitem SET idRequest = :idrequest, active = 1 WHERE idUser = :idUser AND hosname LIKE :hosName")
+    void updateMessage(int idrequest, int idUser, String hosName);
 
-    @Query("UPDATE messageitem SET active = 0 WHERE hosname LIKE :hosName")
-    void updateActive(String hosName);
+    @Query("UPDATE messageitem SET active = 0 WHERE idUser = :idUser AND hosname LIKE :hosName")
+    void updateActive(int idUser, String hosName);
 }
