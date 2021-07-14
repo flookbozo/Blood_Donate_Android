@@ -89,9 +89,6 @@ public class MessageDetailsActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     mMessage = response.body();
                     if(mMessage.isSuccess()) {
-                        /*Toast.makeText(MessageDetailsActivity.this,
-                                "ขอบคุณสำหรับความร่วมมือ ทางโรงพยาบาลกำลังรอโลหิตของคุณอยู่",
-                                Toast.LENGTH_LONG).show();*/
                         messagesTextView.setText(mMessage.getMessages());
                     }
                     else {
